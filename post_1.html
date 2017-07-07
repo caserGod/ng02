@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<form action="" method="post">
+		用户名:<input type="text" id="user" name="user"><br>
+		密&nbsp;&nbsp; 码:<input type="password" id="pwd" name="pwd"><br>
+		<input type="button" id="btn" value="登录">
+		<!-- 提交 submit 使用Ajax提交表单，不需要使用submit改为button -->
+	</form>
+	<script type="text/javascript">
+	
+	var btn = document.getElementById('btn');
+	btn.onclick = function(){
+		var xhr = new XMLHttpRequest();
+		xhr.open('post','post_1.php');		
+		xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+		var user = document.getElementById('user').value;
+		var pwd = document.getElementById('pwd').value;
+		xhr.send("user="+user+"&pwd="+pwd);
+		// xhr.send("user="+user+"&pwd="+pwd);
+		xhr.onreadystatechange=function(){
+			if(xhr.readyState==4&&xhr.status==200){
+				 //debugger;
+				if(xhr.responseText == 'login success'){
+					console.log('登陆成功')
+				}else{
+					console.log('登录失败')
+				}
+			}
+		}
+
+}
+	</script>
+</body>
+</html>

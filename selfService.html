@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>自定义服务</title>
+	<script src="angular.min.js"></script>
+</head>
+<body ng-app="app">
+	<div ng-controller="myCtrl">
+		{{now}}
+		<div>
+			<button ng-click="click()">按钮</button>
+			<span>{{time}}</span>
+		</div>
+	</div>
+</body>
+<script>
+	var app = angular.module("app",[])
+	app.controller("myCtrl",["$scope","self",function($scope,self){
+		$scope.now = self.now();
+		$scope.click = function(){
+			$scope.time = self.now();
+		}
+	}]);
+	//自定义服务 调用service方法 有两个参数
+	//第一个是字符串 表示服务的名称 
+	//第二个是数组 数组里有所依赖的对象 最后一个是function 服务的具体内容
+	//定义一个服务 用来返回一个格式化之后的日期时间
+	app.service("self",["$filter",function($filter){
+		this.now = function(){
+		var d = new Date();
+		var filter = $filter("date");
+		var str = filter(d,"yyyy-MM-dd HH:mm:ss");
+			return str;
+		}
+	}]);
+</script>
+</html>

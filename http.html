@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>http服务</title>
+	<script src="angular.min.js"></script>
+	<style>
+		table{
+			border:1px solid red;
+			width:300px;
+			text-align:center;
+		}
+		td{border:1px solid red;}
+	</style>
+</head>
+<body ng-app="app">
+	<div ng-controller="myCtrl">
+		<input type="button" value="show" ng-click="show()">
+		<table cellspacing="0" cellpadding="0">
+			<tr>
+				<td>id</td>
+				<td>name</td>
+				<td>gender</td>
+			</tr>
+			<tr ng-repeat="n in res">
+				<td>{{n.id}}</td>
+				<td>{{n.name}}</td>
+				<td>{{n.gender}}</td>
+			</tr>
+			<!-- <self-order></self-order> -->
+		</table>
+	</div>
+</body>
+<script>
+	var app = angular.module("app",[]);
+	app.controller("myCtrl",["$scope","$http",function($scope,$http){
+		$scope.show = function(){
+			$http({
+				url:"./data.php",
+				method:"get"
+			}).success(function(result){
+				$scope.res = result
+	// 			app.directive("selfOrder",function(){
+	// 	return{
+	// 		restrict:"CAEM",
+	// 		replace:true,
+	// 		template:'<tr ng-repeat="key in result"><td>{{key.id}}</td><td>{{key.name}}</td><td>{{key.gender}}</td></tr>'
+	// 	}
+	// })			
+			});
+		}
+	}])
+</script>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>自定义服务</title>
+	<script src="angular.min.js"></script>
+</head>
+<body ng-app="app">
+	<div ng-controller="myCtrl">
+		<input type="text" ng-model='msg' ng-change='show()'>
+		<div>{{msgs}}</div>	
+	</div>
+</body>
+<script>
+	var app = angular.module("app",[])
+	app.controller("myCtrl",["$scope","self",function($scope,self){
+		//$scope.msg = self.a("adasd");
+		$scope.show=function(){			
+			$scope.msgs=self.a($scope.msg);
+		}
+	}]);
+
+	app.factory("self",function(){
+		//将传进来的字符串拆分并重新拼接 使用拼接符号$
+		//abcd ===> a-b-c-d
+		function format(msg){
+			var arr = msg.split("");
+			var str = arr.join("-");
+			return str;
+		}
+		function bb(){
+			console.log(123);
+			return "123";
+		}
+		return {
+			a:format,
+			b:bb
+		}
+		//以上代码相当于return a = function(){...} 但是return之后就结束了方法 只能返回
+		//该方法
+		//如果有后续需要返回的方法 则无法返回
+	});
+
+
+	var app=angular.module('app',[]);
+	app.controller('myCtrl',['$scope','self',function($scope,self){
+		$scope.show=function(){
+			$scope.msgs=self.a($scope.msg)
+		}
+	}]);
+	app.factory('self',function(){
+		function format(msg){
+			var arr=msg.split('');
+			var str=arr.join('-');
+			return str;
+		};
+		return {
+			a:format,
+			b:bb
+		}
+	})
+</script>
+</html>

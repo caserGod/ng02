@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>location服务</title>
+	<script src="angular.min.js"></script>
+</head>
+<body ng-app="app">
+	<div ng-controller="myCtrl">
+		<ul>
+			<li>绝对路径:{{abs}}</li>
+			<li>相对路径:{{url}}</li>
+			<li>主机名:{{host}}</li>
+			<li>协议:{{xieyi}}</li>
+			<li>端口:{{port}}</li>
+		</ul>
+	</div>
+</body>
+<script>
+	var app = angular.module("app",[]);
+	app.controller("myCtrl",["$scope","$location",function($scope,$location){
+		$scope.abs = $location.absUrl();
+		$scope.url = $location.url();
+		$scope.host = $location.host();
+		$scope.xieyi = $location.protocol();
+		$scope.port = $location.port();
+	}]);
+</script>
+</html>
